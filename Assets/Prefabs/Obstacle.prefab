@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5688593922846533890}
   - component: {fileID: 6962471196903297554}
   - component: {fileID: 8354045237658574375}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CapsuleBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1851875295767508756}
   - component: {fileID: 3754192146963593609}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Obstacle
   m_TagString: Obstacle
   m_Icon: {fileID: 0}

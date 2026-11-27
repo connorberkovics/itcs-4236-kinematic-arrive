@@ -21,7 +21,7 @@ public class KinematicArriveFormation : MonoBehaviour
     private CharacterController controller;
     private Vector3 velocity;
     private Quaternion rotationOffset;
-    private float gravity = -9.81f;
+    private readonly float gravity = -9.81f;
 
 
     private void Start()
@@ -42,9 +42,8 @@ public class KinematicArriveFormation : MonoBehaviour
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         // Only register collisions with obstacles
-        if (!hit.gameObject.CompareTag("Obstacle")) {
+        if (!hit.gameObject.CompareTag("Obstacle"))
             return;
-        }
 
         // Get vector from character to obstacle
         Vector3 toObstacle = hit.transform.position - transform.position;
@@ -57,15 +56,11 @@ public class KinematicArriveFormation : MonoBehaviour
 
         // Dot prod < 0 -> obstacle on the left, push character right
         if (dotProd < 0f)
-        {
             bump = transform.right * obstacleBumpSpeed;
-        }
 
         // Dot prod > 0 -> obstacle on the right, push character left
         else
-        {
             bump = -1f * obstacleBumpSpeed * transform.right;
-        }
 
         // Nudge character
         controller.Move(bump);
