@@ -4,11 +4,10 @@ using UnityEngine.InputSystem;
 
 public class TargetController : MonoBehaviour
 {
+    public event EventHandler<PositionChangedArgs> TargetPositionChanged;
+
     [Header("Input Settings")]
     [SerializeField] private InputAction moveAction;
-
-    // This event fires whenever the target's position updates
-    public event EventHandler OnTargetPositionChanged;
 
 
     private void OnEnable()
@@ -37,8 +36,27 @@ public class TargetController : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit) && hit.collider.CompareTag("Ground"))
         {
             // Update target's position and notify the character
-            transform.position = new Vector3(hit.point.x, transform.position.y, hit.point.z);
-            OnTargetPositionChanged?.Invoke(this, EventArgs.Empty);
+            Vector3 oldPos = transform.position;
+            Vector3 newPos = new Vector3(hit.point.x, 0f, hit.point.z);
+            transform.position = newPos;
+            TargetPositionChanged?.Invoke(this, new PositionChangedArgs(oldPos, newPos));
+        }
+    }
+
+
+    /// <summary>
+    /// Event arguments for TargetPositionChanged event.
+    /// </summary>
+    public class PositionChangedArgs : EventArgs
+    {
+        public readonly Vector3 oldPos;
+        public readonly Vector3 newPos;
+
+
+        public PositionChangedArgs(Vector3 oldPos, Vector3 newPos)
+        {
+            this.oldPos = oldPos;
+            this.newPos = newPos;
         }
     }
 }
